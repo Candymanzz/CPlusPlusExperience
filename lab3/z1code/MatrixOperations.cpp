@@ -35,7 +35,7 @@ public:
     return result;
   }
 
-  void logger(double mass)
+  void log(double mass)
   {
     std::cout << mass << std::endl;
   }
