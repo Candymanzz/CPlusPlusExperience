@@ -42,30 +42,42 @@ void multiplyMatrices(int **A, int **B, int **result, int n)
   {
     for (int j = 0; j < n; j++)
     {
-      result[i][j] = 0;
+      result[i][j] = 0; 
       for (int k = 0; k < n; k++)
       {
-        result[i][j] = A[i][j] - B[i][j];
+        result[i][j] += A[i][k] * B[k][j]; 
       }
     }
   }
 }
 
-void subtractMatrices(int **A, int **B, int **result, int n)
+int **subtractMatrices(int **A, int **B, int n)
 {
+  int **result = new int *[n]; 
   for (int i = 0; i < n; ++i)
   {
+    result[i] = new int[n];
     for (int j = 0; j < n; ++j)
     {
       result[i][j] = A[i][j] - B[i][j];
     }
   }
+  return result;
+}
+
+void freeMatrix(int **matrix, int n)
+{
+  for (int i = 0; i < n; ++i)
+  {
+    delete[] matrix[i];
+  }
+  delete[] matrix;
 }
 
 int main()
 {
   int n;
-  std::cout << "enter n: ";
+  std::cout << "Enter n: ";
   std::cin >> n;
 
   int **A = new int *[n];
@@ -73,7 +85,6 @@ int main()
   int **AT = new int *[n];
   int **BT = new int *[n];
   int **BT_A = new int *[n];
-  int **C = new int *[n];
 
   for (int i = 0; i < n; ++i)
   {
@@ -82,7 +93,6 @@ int main()
     AT[i] = new int[n];
     BT[i] = new int[n];
     BT_A[i] = new int[n];
-    C[i] = new int[n];
   }
 
   std::cout << "Matrix A:" << std::endl;
@@ -93,30 +103,21 @@ int main()
   transposeMatrix(A, AT, n);
   transposeMatrix(B, BT, n);
 
-  //  B^T A
+  // B^T * A
   multiplyMatrices(BT, A, BT_A, n);
 
   // C = A^T - B^T * A
-  subtractMatrices(AT, BT_A, C, n);
+  int **C = subtractMatrices(AT, BT_A, n); 
 
   std::cout << "Result C = A^T - B^T * A:" << std::endl;
   outputMatrix(C, n);
 
-  for (int i = 0; i < n; ++i)
-  {
-    delete[] A[i];
-    delete[] B[i];
-    delete[] AT[i];
-    delete[] BT[i];
-    delete[] BT_A[i];
-    delete[] C[i];
-  }
-  delete[] A;
-  delete[] B;
-  delete[] AT;
-  delete[] BT;
-  delete[] BT_A;
-  delete[] C;
-
+  freeMatrix(A, n);
+  freeMatrix(B, n);
+  freeMatrix(AT, n);
+  freeMatrix(BT, n);
+  freeMatrix(BT_A, n);
+  freeMatrix(C, n); 
+  
   return 0;
 }
