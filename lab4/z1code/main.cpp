@@ -1,34 +1,31 @@
 #include <iostream>
-#include "ArrayBase.h"
-#include "IntArray.h"
-#include "DoubleArray.h"
+#include "BaseMatrix.h"
+#include "MatrixOperations.h"
+#include "AdvancedMatrix.h"
 
 int main()
 {
-  int intArrayData[] = {1, -2, 3, -4, 5, -6};
-  double doubleArrayData[] = {1.5, -2.2, 3.3, -4.4, 5.5, -6.6};
+  const int SIZE = 2;
+  BaseMatrix *matrices[2];
 
-  ArrayBase *intArray = new IntArray(intArrayData, 6);
-  ArrayBase *doubleArray = new DoubleArray(doubleArrayData, 6);
+  matrices[0] = new MatrixOperations(SIZE);
+  matrices[1] = new AdvancedMatrix(SIZE);
 
-  std::cout << "Original integer array: ";
-  intArray->printNegativeElements();
+  for (int i = 0; i < 2; ++i)
+  {
+    matrices[i]->fillMatrix();
+  }
 
-  intArray->swapHalves();
+  std::cout << "Displaying matrices:" << std::endl;
+  for (int i = 0; i < 2; ++i)
+  {
+    matrices[i]->display();
+  }
 
-  std::cout << "After swapping halves: ";
-  intArray->printNegativeElements();
-
-  std::cout << "Original double array: ";
-  doubleArray->printNegativeElements();
-
-  doubleArray->swapHalves();
-
-  std::cout << "After swapping halves: ";
-  doubleArray->printNegativeElements();
-
-  delete intArray;
-  delete doubleArray;
+  for (int i = 0; i < 2; ++i)
+  {
+    delete matrices[i];
+  }
 
   return 0;
 }

@@ -2,7 +2,7 @@ CXX = clang++
 CXXFLAGS = -std=c++11
 TARGET = main
 
-SRCS = main.cpp IntArray.cpp DoubleArray.cpp
+SRCS = main.cpp 
 OBJS = $(SRCS:.cpp=.o)
 
 all: $(TARGET)
