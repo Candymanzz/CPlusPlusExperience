@@ -1,7 +1,7 @@
 #include <iostream>
-#include "Matrix.cpp"
-#include "MatrixOperations.cpp"
-#include "AdvancedMatrix.cpp"
+#include "Matrix.h"
+#include "MatrixOperations.h"
+#include "AdvancedMatrix.h"
 
 int main()
 {

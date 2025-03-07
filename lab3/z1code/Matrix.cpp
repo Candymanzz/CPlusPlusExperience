@@ -1,68 +1,54 @@
-#ifndef MATRIX_H
-#define MATRIX_H
+#include "Matrix.h"
 
-#include <vector>
-#include <iostream>
-#include <iomanip>
+Matrix::Matrix(int size) : n(size), data(size, std::vector<double>(size)) {}
 
-class Matrix
+int Matrix::getN() const
 {
-private:
-  int n;
-  std::vector<std::vector<double>> data;
+  return n;
+}
 
-public:
-  Matrix(int size) : n(size), data(size, std::vector<double>(size)) {}
+std::vector<std::vector<double>> Matrix::getData() const
+{
+  return data;
+}
 
-  int getN() const
+void Matrix::setData(std::vector<std::vector<double>> data)
+{
+  this->data = data;
+}
+
+Matrix::~Matrix() {}
+
+void Matrix::fillMatrix()
+{
+  for (int i = 0; i < n; i++)
   {
-    return n;
-  }
-  std::vector<std::vector<double>> getData() const
-  {
-    return data;
-  }
-
-  void setData(std::vector<std::vector<double>> data)
-  {
-    this->data = data;
-  }
-
-  virtual ~Matrix() {}
-
-  virtual void fillMatrix()
-  {
-    for (int i = 0; i < n; i++)
+    for (int j = 0; j < n; j++)
     {
-      for (int j = 0; j < n; j++)
-      {
-        std::cout << "Enter element [" << i << "][" << j << "]: ";
-        std::cin >> data[i][j];
-      }
+      std::cout << "Enter element [" << i << "][" << j << "]: ";
+      std::cin >> data[i][j];
     }
   }
+}
 
-  friend std::ostream &operator<<(std::ostream &os, const Matrix &matrix)
+std::ostream &operator<<(std::ostream &os, const Matrix &matrix)
+{
+  for (const auto &row : matrix.data)
   {
-    for (const auto &row : matrix.data)
+    for (const auto &elem : row)
     {
-      for (const auto &elem : row)
-      {
-        os << std::setw(5) << elem << " ";
-      }
-      os << std::endl;
+      os << std::setw(5) << elem << " ";
     }
-    return os;
+    os << std::endl;
   }
+  return os;
+}
 
-  Matrix transpose() const
-  {
-    Matrix transposed(n);
-    for (int i = 0; i < n; ++i)
-      for (int j = 0; j < n; ++j)
-        transposed.data[j][i] = data[i][j];
-    return transposed;
-  }
-};
-
-#endif
+Matrix Matrix::transpose() const
+{
+  Matrix transposed(n);
+  for (int i = 0; i < n; ++i)
+    for (int j = 0; j < n; ++j)
+      transposed.data[j][i] = data[i][j];
+  return transposed;
+}

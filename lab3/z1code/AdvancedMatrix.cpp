@@ -1,18 +1,9 @@
-#ifndef ADVANCEDMATRIX_H
-#define ADVANCEDMATRIX_H
+#include "AdvancedMatrix.h"
 
-#include "MatrixOperations.cpp"
+AdvancedMatrix::AdvancedMatrix(int size) : MatrixOperations(size) {}
 
-class AdvancedMatrix : public MatrixOperations
+void AdvancedMatrix::fillMatrix()
 {
-public:
-  AdvancedMatrix(int size) : MatrixOperations(size) {}
-
-  void fillMatrix() override
-  {
-    std::cout << "Advanced matrix fill method" << std::endl;
-    MatrixOperations::fillMatrix();
-  }
-};
-
-#endif
+  std::cout << "Advanced matrix fill method" << std::endl;
+  MatrixOperations::fillMatrix();
+}
